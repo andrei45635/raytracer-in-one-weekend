@@ -1,0 +1,5 @@
+cmake-build-debug/
+build/
+ch4/
+.idea/
+image.ppm
