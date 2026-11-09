@@ -1,7 +1,9 @@
+#include "lib/vec3.h"
+#include "lib/colour.h"
+
 #include <iostream>
 
-
-//TODO: Left at vec3 class
+//TODO: starting ch4
 
 int main() {
     constexpr int img_width{256};
@@ -12,15 +14,8 @@ int main() {
     for (int j = 0; j < img_height; ++j) {
         std::clog << "\r Scanlines remaining: " << (img_height - j) << ' ' << std::flush;
         for (int i = 0; i < img_width; ++i) {
-            const auto r = static_cast<double>(i) / (img_width - 1);
-            const auto g = static_cast<double>(j) / (img_height - 1);
-            constexpr auto b = 0.0;
-
-            const int ir = static_cast<int>(255.999 * r);
-            const int ig = static_cast<int>(255.999 * g);
-            constexpr int ib = static_cast<int>(255.999 * b);
-
-            std::cout << ir << " " << ig << " " << ib << "\n";
+            auto pixel_colour = colour(static_cast<double>(i) / (img_width - 1), static_cast<double>(j) / (img_height - 1), 0);
+            write_colour(std::cout, pixel_colour);
         }
     }
 

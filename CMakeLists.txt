@@ -10,8 +10,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(SOURCE_ONE_WEEKEND
         src/main.cpp
-        src/lib/vec3.cpp
         src/lib/vec3.h
+        src/lib/colour.h
+        src/lib/colour.h
 )
 
 include_directories(src)
