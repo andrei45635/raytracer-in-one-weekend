@@ -84,7 +84,7 @@ public:
     }
 
     inline vec3 operator*(const vec3& lhs, double t) {
-        return lhs * t;
+        return t * lhs;
     }
 
     inline vec3 operator/(const vec3& lhs, double t) {

@@ -13,6 +13,7 @@ set(SOURCE_ONE_WEEKEND
         src/lib/vec3.h
         src/lib/colour.h
         src/lib/colour.h
+        src/lib/ray.h
 )
 
 include_directories(src)
