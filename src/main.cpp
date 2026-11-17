@@ -4,11 +4,24 @@
 
 #include <iostream>
 
-//TODO: starting ch5
+//TODO: starting ch6
 
-colour ray_colour(const ray& r) {
-    vec3 unit_direction = unit_vector(r.direction());
-    auto a = 0.5 * (unit_direction.y() + 1.0);
+static bool hit_sphere(const point3& center, double radius, const ray& ray) {
+    const vec3 oc = center - ray.origin();
+    const auto a = dot(ray.direction(), ray.direction());
+    const auto b = -2 * dot(ray.direction(), oc);
+    const auto c = dot(oc, oc) - radius * radius;
+    const auto delta = b * b - 4 * a * c;
+    return delta >= 0;
+}
+
+static colour ray_colour(const ray& r) {
+    if (hit_sphere(point3(0, 0, -1), 0.5, r)) {
+        return colour(1, 0, 0);
+    }
+
+    const vec3 unit_direction = unit_vector(r.direction());
+    const auto a = 0.5 * (unit_direction.y() + 1.0);
     return (1.0 - a) * colour(1.0, 1.0, 1.0) + a * colour(0.5, 0.7, 1.0);
 }
 
