@@ -6,18 +6,27 @@
 
 //TODO: starting ch6
 
-static bool hit_sphere(const point3& center, double radius, const ray& ray) {
+double hit_sphere(const point3& center, double radius, const ray& ray) {
     const vec3 oc = center - ray.origin();
-    const auto a = dot(ray.direction(), ray.direction());
-    const auto b = -2 * dot(ray.direction(), oc);
-    const auto c = dot(oc, oc) - radius * radius;
-    const auto delta = b * b - 4 * a * c;
-    return delta >= 0;
+    const auto a = ray.direction().length_squared();
+    const auto h = dot(ray.direction(), oc);
+    const auto c = oc.length_squared() - radius * radius;
+    const auto discriminant = h * h - a * c;
+
+    if (discriminant < 0.0) {
+        return -1.0;
+    } else {
+        return (h - std::sqrt(discriminant)) / a;
+    }
+
+    return discriminant >= 0;
 }
 
 static colour ray_colour(const ray& r) {
-    if (hit_sphere(point3(0, 0, -1), 0.5, r)) {
-        return colour(1, 0, 0);
+    auto t = hit_sphere(point3(0, 0, -1), 0.5, r);
+    if (t > 0.0) {
+        vec3 N = unit_vector(r.at(t) - vec3(0, 0, -1));
+        return 0.5 * colour(N.x() + 1, N.y() + 1, N.z() + 1);
     }
 
     const vec3 unit_direction = unit_vector(r.direction());
