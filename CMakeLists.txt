@@ -14,6 +14,8 @@ set(SOURCE_ONE_WEEKEND
         src/lib/colour.h
         src/lib/colour.h
         src/lib/ray.h
+        src/lib/hittable.h
+        src/lib/sphere.h
 )
 
 include_directories(src)

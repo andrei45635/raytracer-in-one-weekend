@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-//TODO: starting ch6
+//TODO: starting ch6.5
 
 double hit_sphere(const point3& center, double radius, const ray& ray) {
     const vec3 oc = center - ray.origin();
