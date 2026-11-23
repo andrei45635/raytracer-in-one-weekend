@@ -10,12 +10,16 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 set(SOURCE_ONE_WEEKEND
         src/main.cpp
-        src/lib/vec3.h
-        src/lib/colour.h
-        src/lib/colour.h
-        src/lib/ray.h
-        src/lib/hittable.h
-        src/lib/sphere.h
+        src/vec3.h
+        src/colour.h
+        src/colour.h
+        src/ray.h
+        src/hittable.h
+        src/sphere.h
+        src/hittable_list.h
+        src/rtweekend.h
+        src/hittable.h
+        src/interval.h
 )
 
 include_directories(src)
