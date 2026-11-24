@@ -20,6 +20,7 @@ set(SOURCE_ONE_WEEKEND
         src/rtweekend.h
         src/hittable.h
         src/interval.h
+        src/camera.h
 )
 
 include_directories(src)
