@@ -4,7 +4,7 @@
 #include "hittable_list.h"
 #include "sphere.h"
 
-//TODO: starting ch8
+//TODO: starting ch9
 
 int main() {
     // world
@@ -18,6 +18,7 @@ int main() {
 
     camera.aspect_ratio = 16.0 / 9.0;
     camera.img_width = 400;
+    camera.samples_per_pixel = 100;
 
     camera.render(world);
 
