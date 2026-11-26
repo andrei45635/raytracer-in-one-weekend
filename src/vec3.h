@@ -53,6 +53,14 @@ public:
     [[nodiscard]] double length() const {
         return std::sqrt(length_squared());
     }
+
+    static vec3 random() {
+        return vec3(random_double(), random_double(), random_double());
+    }
+
+    static vec3 random(double min, double max) {
+        return vec3(random_double(min, max), random_double(min, max), random_double(min, max));
+    }
 };
     using point3 = vec3;
 
@@ -98,6 +106,25 @@ public:
 
     inline vec3 unit_vector(const vec3& v) {
         return v / v.length();
+    }
+
+    inline vec3 random_unit_vector() {
+        while (true) {
+            auto p = vec3::random(-1, 1);
+            auto lensq = p.length_squared();
+            if (1e-160 < lensq && lensq <= 1) {
+                return p / sqrt(lensq); // small enough values (i.e. values very near to the center) can underflow to zero when taking the sqrt
+            }
+        }
+    }
+
+    inline vec3 random_on_hemisphere(const vec3& normal) {
+        vec3 on_unit_sphere = random_unit_vector();
+        if (dot(normal, on_unit_sphere) > 0.0) { // same hemisphere as the surface normal
+            return on_unit_sphere;
+        } else {
+            return -on_unit_sphere;
+        }
     }
 
 #endif //VEC3_H

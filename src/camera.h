@@ -8,6 +8,7 @@ public:
     double aspect_ratio = 1.0; // ratio of image width over height
     int img_width = 100; // rendered image width in pixel count
     int samples_per_pixel = 10; // count of random samples per pixel
+    int max_depth = 10; // max number of rays that can bounce into the scene
 
     void render(const hittable &world) {
         initialize();
@@ -19,7 +20,7 @@ public:
                 colour pixel_colour(0, 0, 0);
                 for (int sample = 0; sample < samples_per_pixel; sample++) {
                     ray r = get_ray(i, j);
-                    pixel_colour += ray_colour(r, world);
+                    pixel_colour += ray_colour(r, max_depth, world);
                 }
                 write_colour(std::cout, pixel_samples_scale * pixel_colour);
             }
@@ -79,11 +80,16 @@ private:
         return vec3(random_double() - 0.5, random_double() - 0.5, 0);
     }
 
-    [[nodiscard]] static colour ray_colour(const ray &r, const hittable &world) {
+    [[nodiscard]] static colour ray_colour(const ray &r, int max_depth, const hittable &world) {
+        if (max_depth <= 0) { // check if we've hit the ray bounce limit => no more light is gathered
+            return colour(0, 0, 0);
+        }
+
         hit_record rec;
 
-        if (world.hit(r, interval(0, infinity), rec)) {
-            return 0.5 * (rec.normal + colour(1, 1, 1));
+        if (world.hit(r, interval(0.00001, infinity), rec)) {
+            vec3 direction = rec.normal + random_unit_vector();
+            return 0.1 * ray_colour(ray(rec.p, direction), max_depth - 1, world);
         }
 
         vec3 unit_direction = unit_vector(r.direction());
